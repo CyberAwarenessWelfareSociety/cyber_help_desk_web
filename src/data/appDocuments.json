@@ -1,0 +1,1109 @@
+[
+  {
+    "slug": "legal-identity",
+    "title": "Legal identity",
+    "description": "Registration, certifications and organizational details.",
+    "source": "app/(screen)/LegalIdentityScreen.tsx",
+    "effectiveDate": null,
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Who We Are – About the Cyber Help Desk App"
+      },
+      {
+        "type": "paragraph",
+        "text": "The Cyber Help Desk App has been developed by Cyber Awareness Welfare Society (CAWS), a registered non-profit organization working across India in the fields of cyber awareness, citizen assistance, and digital safety."
+      },
+      {
+        "type": "heading",
+        "text": "Registration Details"
+      },
+      {
+        "type": "paragraph",
+        "text": "Registered under Section 21 of the Indian Constitution Act of 1860"
+      },
+      {
+        "type": "paragraph",
+        "text": "Registration Number: BAG/02867/2024-2025"
+      },
+      {
+        "type": "paragraph",
+        "text": "Validity: Until the year 2029"
+      },
+      {
+        "type": "paragraph",
+        "text": "Official Address: Patti Mundala, Town Khekra, District Baghpat, Uttar Pradesh"
+      },
+      {
+        "type": "paragraph",
+        "text": "GST Number: 09AAGAC9732J1ZC"
+      },
+      {
+        "type": "heading",
+        "text": "Certifications"
+      },
+      {
+        "type": "paragraph",
+        "text": "Certified under 12A by the Government of India, allowing tax exemptions"
+      },
+      {
+        "type": "paragraph",
+        "text": "80G certificate not yet granted, so we do not promise tax benefits to donors"
+      },
+      {
+        "type": "heading",
+        "text": "Bank Accounts"
+      },
+      {
+        "type": "paragraph",
+        "text": "Operates two bank accounts:"
+      },
+      {
+        "type": "paragraph",
+        "text": "• One GST-linked operational account, where minor commercial proceeds are reinvested into social service"
+      },
+      {
+        "type": "paragraph",
+        "text": "• One donor account, where contributions are directly used for public welfare"
+      },
+      {
+        "type": "heading",
+        "text": "Government Registrations"
+      },
+      {
+        "type": "paragraph",
+        "text": "Registered with the NGO Darpan portal of NITI Aayog, Government of India"
+      },
+      {
+        "type": "paragraph",
+        "text": "NGO Darpan Certificate Number: UP/2025/0815051"
+      },
+      {
+        "type": "paragraph",
+        "text": "Verifiable on the NGO Darpan website"
+      },
+      {
+        "type": "heading",
+        "text": "Other Verifications"
+      },
+      {
+        "type": "paragraph",
+        "text": "D-U-N-S Number: 77-169-5479"
+      },
+      {
+        "type": "paragraph",
+        "text": "Verified by Google Non-Profit, receiving up to $10,000/month in Ad Grants to promote cyber awareness properly"
+      }
+    ]
+  },
+  {
+    "slug": "mission",
+    "title": "Our mission",
+    "description": "Cyber awareness, citizen assistance and free public service camps.",
+    "source": "app/(screen)/Mission.tsx",
+    "effectiveDate": null,
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Cyber Awareness Welfare Society"
+      },
+      {
+        "type": "heading",
+        "text": "Core Mission"
+      },
+      {
+        "type": "paragraph",
+        "text": "The core mission of Cyber Awareness Welfare Society is to protect Indian citizens from cybercrime and digital fraud. We believe that just as diagnosing a disease is essential before treating it, identifying and understanding cyber fraud as a social illness is equally important before prevention."
+      },
+      {
+        "type": "heading",
+        "text": "The Cyber Help Desk App"
+      },
+      {
+        "type": "paragraph",
+        "text": "We developed the Cyber Help Desk App with this vision, so that:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Citizens can be made aware of cyber fraud"
+      },
+      {
+        "type": "paragraph",
+        "text": "- They can learn how to identify suspicious links, calls, or messages"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Most importantly, they understand the importance of verifying information before falling victim to fraud"
+      },
+      {
+        "type": "paragraph",
+        "text": "We believe ignorance is the greatest vulnerability, and when citizens are informed, fraudsters lose their power."
+      },
+      {
+        "type": "paragraph",
+        "text": "Another key mission of the organization is to provide public technical assistance to police departments and investigative agencies, enabling them to reach cybercriminals quickly and accurately based on citizen-submitted evidence."
+      },
+      {
+        "type": "heading",
+        "text": "🏕️ Free Public Service Camps Initiative"
+      },
+      {
+        "type": "paragraph",
+        "text": "We aim to empower citizens across every village and city in India to organize free public service camps using the Cyber Help Desk App. These camps will:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Educate people about cyber safety"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Teach them how to avoid online fraud"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Guide victims on how to file complaints effectively"
+      },
+      {
+        "type": "paragraph",
+        "text": "Our dream is for every citizen to become a carrier of cyber awareness, creating a society where fraudsters find no opportunity to exploit."
+      },
+      {
+        "type": "heading",
+        "text": "🛡️ Our Commitment"
+      },
+      {
+        "type": "paragraph",
+        "text": "\"Every citizen safe, every complaint heard — this is our mission.\""
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Awareness Welfare Society is a non-profit organization committed solely to public interest and social service. We do not seek commercial gain, and any technical or financial resources received are fully reinvested into public welfare."
+      }
+    ]
+  },
+  {
+    "slug": "security-and-privacy",
+    "title": "Security & privacy",
+    "description": "Volunteer verification, oversight and privacy standards.",
+    "source": "app/(screen)/SecurityAndPrivacy.tsx",
+    "effectiveDate": null,
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Our Verification and Security Standards"
+      },
+      {
+        "type": "paragraph",
+        "text": "At Cyber Awareness Welfare Society, trust and safety are at the core of everything we do."
+      },
+      {
+        "type": "heading",
+        "text": "For Our Organization"
+      },
+      {
+        "type": "paragraph",
+        "text": "  We appoint volunteers only after a comprehensive background check and verification process."
+      },
+      {
+        "type": "paragraph",
+        "text": "Rigorous Vetting:"
+      },
+      {
+        "type": "paragraph",
+        "text": "  Our internal team works alongside law enforcement protocols to conduct deep investigations. No individual with a criminal background is allowed to join."
+      },
+      {
+        "type": "paragraph",
+        "text": "Internal Oversight:"
+      },
+      {
+        "type": "paragraph",
+        "text": "  All volunteer activities are strictly supervised even after joining to maintain the highest level of integrity."
+      },
+      {
+        "type": "paragraph",
+        "text": "Continuous Monitoring:"
+      },
+      {
+        "type": "paragraph",
+        "text": "Trusted volunteers earn high social respect and recognition"
+      },
+      {
+        "type": "paragraph",
+        "text": "Advanced access granted to reliable members (e.g., managing official chats)"
+      },
+      {
+        "type": "heading",
+        "text": "Your Privacy is Our Priority"
+      },
+      {
+        "type": "paragraph",
+        "text": "  All your conversations with us are kept strictly confidential."
+      },
+      {
+        "type": "paragraph",
+        "text": "Confidentiality:"
+      },
+      {
+        "type": "paragraph",
+        "text": "  Your contact number and personal details are never shared with any third party."
+      },
+      {
+        "type": "paragraph",
+        "text": "Data Protection:"
+      },
+      {
+        "type": "paragraph",
+        "text": "  All chat records are permanently deleted from our servers 5 days after the session is closed."
+      },
+      {
+        "type": "paragraph",
+        "text": "Automatic Deletion:"
+      },
+      {
+        "type": "paragraph",
+        "text": "You will receive a formal notification once your data has been successfully erased."
+      },
+      {
+        "type": "paragraph",
+        "text": "Your safety and trust are non-negotiable for us."
+      }
+    ]
+  },
+  {
+    "slug": "data-storage-policy",
+    "title": "Data source & storage policy",
+    "description": "Data sources, account access, searches, location and account deletion.",
+    "source": "app/(screen)/DataStoragePolicyScreen.tsx",
+    "effectiveDate": null,
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Cyber Help Desk App"
+      },
+      {
+        "type": "heading",
+        "text": "Data Source Disclaimer"
+      },
+      {
+        "type": "paragraph",
+        "text": "The app displays data sourced from public domains and authorized data aggregator companies. These sources also provide similar data to insurance providers and financial institutions for fraud prevention."
+      },
+      {
+        "type": "paragraph",
+        "text": "We explicitly declare that:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- The data is for informational and awareness purposes only"
+      },
+      {
+        "type": "paragraph",
+        "text": "- We do not guarantee full authenticity, accuracy, or legal validity"
+      },
+      {
+        "type": "paragraph",
+        "text": "- The data cannot be used as legal evidence in any judicial proceeding"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Users are advised to conduct independent verification before taking any action"
+      },
+      {
+        "type": "heading",
+        "text": "🧭 Services Available Without Login"
+      },
+      {
+        "type": "paragraph",
+        "text": "Any user can access the following services without logging in:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- View the app interface"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Book cyber awareness camps"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Access the official Cyber Help Desk URL and helpline number"
+      },
+      {
+        "type": "paragraph",
+        "text": "This ensures that awareness content is freely accessible to all citizens without barriers."
+      },
+      {
+        "type": "heading",
+        "text": "🔐 When and Why Login Is Required"
+      },
+      {
+        "type": "paragraph",
+        "text": "Login becomes mandatory when a user wants to verify records, perform searches, make payments, or add entries. This is done to:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Ensure equal access for all users"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Protect the app from scraping and bots"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Prevent unnecessary server load"
+      },
+      {
+        "type": "heading",
+        "text": "👥 User Classification: Two Categories"
+      },
+      {
+        "type": "heading",
+        "text": "1. Common Citizens"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Mobile number verification is mandatory"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Name and email ID are optional"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Password creation is required"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Identity is established based on mobile number"
+      },
+      {
+        "type": "paragraph",
+        "text": "- This data is stored securely on our servers"
+      },
+      {
+        "type": "heading",
+        "text": "2. Police Personnel"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Name, email ID (optional), mobile number"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Name of the police station they are posted at"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Reference contact of another police officer (optional)"
+      },
+      {
+        "type": "paragraph",
+        "text": "- We verify police personnel by calling their respective police station"
+      },
+      {
+        "type": "heading",
+        "text": "🔍 Search Data Policy"
+      },
+      {
+        "type": "paragraph",
+        "text": "We explicitly declare that:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- We do not store any search data."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Whether the user is a citizen or a police officer — search activities within the app are not permanently recorded, ensuring complete privacy."
+      },
+      {
+        "type": "heading",
+        "text": "📍 Location Data & Privacy Policy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Device location is accessed strictly on-demand with explicit user permission:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- During Emergency SOS triggers to immediately relay coordinates to local responders and police stations"
+      },
+      {
+        "type": "paragraph",
+        "text": "- When voluntarily using \"Share Live Location\" in support chats to receive immediate assistance"
+      },
+      {
+        "type": "paragraph",
+        "text": "- On startup via GeoIP to automatically configure local emergency helpline numbers and language"
+      },
+      {
+        "type": "paragraph",
+        "text": "- To display regional cyber crime Black Spot zones and commercial vehicle No Entry windows"
+      },
+      {
+        "type": "paragraph",
+        "text": "- We NEVER track, log, or record user location continuously in the background"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Location records shared in chats are automatically purged when the chat is closed or deleted"
+      },
+      {
+        "type": "heading",
+        "text": "🗑️ Delete Account Option"
+      },
+      {
+        "type": "paragraph",
+        "text": "Every user is provided with a \"Delete Account\" option within the app. Through this, they can:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Delete their name"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Delete their mobile number"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Delete all other personal details from our servers permanently"
+      },
+      {
+        "type": "paragraph",
+        "text": "This process is automated, transparent, and user-controlled."
+      }
+    ]
+  },
+  {
+    "slug": "advocate-verification",
+    "title": "Advocate verification & access",
+    "description": "How advocate access works, user responsibilities and data sharing.",
+    "source": "app/(screen)/AdvocateVerification.tsx",
+    "effectiveDate": null,
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "✅ Purpose of the Service"
+      },
+      {
+        "type": "paragraph",
+        "text": "The Advocate Verification & Access Service, provided through an agreement between Cyber Awareness Welfare Society and Papa Consultancy Pvt. Ltd., offers Indian citizens free access to verified information about registered advocates across the country."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Verified name, mobile number, and Bar Council registration status of advocates."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Read reviews from other clients to make informed decisions."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Completely free of charge; no fees are collected by the NGO or Papa Consultancy."
+      },
+      {
+        "type": "heading",
+        "text": "👤 User Responsibilities"
+      },
+      {
+        "type": "paragraph",
+        "text": "Users are solely responsible for their interactions with advocates. This includes:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Deciding which advocate to contact and engage."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Negotiating fees and terms of service, which are private agreements with the advocate."
+      },
+      {
+        "type": "paragraph",
+        "text": "- If an advocate fails to deliver services or behaves inappropriately:"
+      },
+      {
+        "type": "paragraph",
+        "text": "    - File a complaint within the app."
+      },
+      {
+        "type": "paragraph",
+        "text": "    - Leave a negative review to alert other users."
+      },
+      {
+        "type": "heading",
+        "text": "🛡️ Limited Responsibility of Cyber Awareness Welfare Society"
+      },
+      {
+        "type": "paragraph",
+        "text": "Our responsibility is limited to ensuring the advocates listed are registered with the Bar Council of India. We are not responsible for:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Advocate's fees, service quality, or behavior."
+      },
+      {
+        "type": "paragraph",
+        "text": "If credible complaints are received, we may request Papa Consultancy to:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Remove the advocate's profile from the portal."
+      },
+      {
+        "type": "paragraph",
+        "text": "- This may impact the advocate's professional reputation."
+      },
+      {
+        "type": "heading",
+        "text": "🤝 Role of Papa Consultancy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Papa Consultancy provides verified advocate information to thousands of users monthly, free of charge. Their goal is to ensure every citizen can access a verified advocate and make decisions based on reviews."
+      },
+      {
+        "type": "heading",
+        "text": "📩 Data Sharing & Communication Process"
+      },
+      {
+        "type": "paragraph",
+        "text": "When a user submits a form in the app:"
+      },
+      {
+        "type": "paragraph",
+        "text": "- User information (name, mobile number, and required details) is shared with Papa Consultancy Pvt. Ltd."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Papa Consultancy sends an SMS to the user with the verified advocate's name and mobile number."
+      },
+      {
+        "type": "paragraph",
+        "text": "- The advocate receives the user's name and mobile number for direct contact."
+      },
+      {
+        "type": "paragraph",
+        "text": "This process is fully automated, ensuring quick access to verified advocates."
+      },
+      {
+        "type": "heading",
+        "text": "⚖️ Clarity and Responsibility"
+      },
+      {
+        "type": "paragraph",
+        "text": "Users must understand that their information will be shared with Papa Consultancy and the selected advocate. The NGO and Papa Consultancy are only responsible for providing verified advocate information. Any financial transactions or service agreements are between the user and the advocate."
+      },
+      {
+        "type": "paragraph",
+        "text": "- If an advocate fails to deliver or causes issues, users must file a complaint in the app and leave a negative review."
+      },
+      {
+        "type": "heading",
+        "text": "🌐 Major Benefits for Citizens"
+      },
+      {
+        "type": "paragraph",
+        "text": "- Nationwide Access: Hire verified advocates from anywhere in India."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Verified Information: Pre-verified advocate details (name, mobile number, Bar Council status)."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Decision Through Reviews: Make informed choices based on client reviews."
+      },
+      {
+        "type": "paragraph",
+        "text": "- Transparency and Safety: File complaints and leave reviews to impact advocates' credibility if they fail to deliver."
+      },
+      {
+        "type": "heading",
+        "text": "📲 Why Was This Feature Added?"
+      },
+      {
+        "type": "paragraph",
+        "text": "This feature was introduced based on public demand for easy access to verified advocates. For the first time, ordinary citizens can safely and transparently hire advocates from anywhere in India, ensuring trustworthy legal assistance without fear of fraud."
+      }
+    ]
+  },
+  {
+    "slug": "privacy-policy",
+    "title": "Privacy policy",
+    "description": "The Cyber Help Desk application’s data protection policy.",
+    "source": "app/(screen)/PrivacyPolicy.tsx",
+    "effectiveDate": "August 24, 2026",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Data Protection & Privacy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Awareness Welfare Society (CAWS)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Application :"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Help Desk"
+      },
+      {
+        "type": "paragraph",
+        "text": "Effective Date :"
+      },
+      {
+        "type": "paragraph",
+        "text": "August 24, 2026"
+      },
+      {
+        "type": "heading",
+        "text": "Section 1: Information We Collect"
+      },
+      {
+        "type": "heading",
+        "text": "• Account Registration Data"
+      },
+      {
+        "type": "paragraph",
+        "text": "For authentication (Google OAuth) and secure login, we strictly collect and store only your name and email address, granting seamless access to our global scam verification tools."
+      },
+      {
+        "type": "heading",
+        "text": "• Location Information (GPS & Network GeoIP)"
+      },
+      {
+        "type": "paragraph",
+        "text": "We collect approximate location data (via Google GeoIP / network signals) upon app launch to configure country-specific emergency helpline numbers and language packs. With your explicit in-app consent, we collect precise device GPS coordinates when you trigger the \"Emergency SOS\" feature or voluntarily choose to \"Share Live Location\" within support chats. We do not continuously monitor or track your location in the background."
+      },
+      {
+        "type": "heading",
+        "text": "• Voluntary Incident Data"
+      },
+      {
+        "type": "paragraph",
+        "text": "Details shared during live support chats (e.g., fraud descriptions, transaction IDs, optional location) are processed temporarily and solely for rescue, investigation, and guidance purposes."
+      },
+      {
+        "type": "heading",
+        "text": "Section 2: How We Handle & Protect Data"
+      },
+      {
+        "type": "heading",
+        "text": "• Role-Based Volunteer Visibility"
+      },
+      {
+        "type": "paragraph",
+        "text": "Volunteers interacting with victims can only view the user's name and gender. Contact information (email and phone number) remains masked."
+      },
+      {
+        "type": "heading",
+        "text": "• Location Protection & Emergency Dispatch"
+      },
+      {
+        "type": "paragraph",
+        "text": "Location coordinates shared during SOS or support requests are used strictly to identify nearby police stations, cyber crime cells, and high-risk crime zones (Black Spots). In situations involving imminent danger or extreme distress, location data may be shared with verified emergency authorities to safeguard human life."
+      },
+      {
+        "type": "heading",
+        "text": "• Zero-Knowledge Architecture for Closed Chats"
+      },
+      {
+        "type": "paragraph",
+        "text": "Following our 48-hour total inactivity protocol (24-hour warning + 24-hour grace period) or user-initiated deletion, all chat logs, shared locations, media files, and sensitive documents are permanently purged from active databases and encrypted backups."
+      },
+      {
+        "type": "heading",
+        "text": "Section 3: Global Compliance & Takedown Authorizations"
+      },
+      {
+        "type": "heading",
+        "text": "• Global Standards (GDPR / CCPA / UK GDPR / DPDP Act)"
+      },
+      {
+        "type": "paragraph",
+        "text": "We adhere to international data protection standards, ensuring user rights such as the \"Right to be Forgotten,\" balanced against public safety and life-saving interventions."
+      },
+      {
+        "type": "heading",
+        "text": "• NCII & Platform Safety Cooperation"
+      },
+      {
+        "type": "paragraph",
+        "text": "As an active member utilizing partner dashboards (such as StopNCII), we process sensitive image/video takedown requests securely to protect genuine victims while preventing fraudulent submissions."
+      },
+      {
+        "type": "heading",
+        "text": "Section 4: User Consent & Policy Updates"
+      },
+      {
+        "type": "paragraph",
+        "text": "By using the \"Cyber Help Desk\" application, you grant explicit consent to these Terms & Conditions and Privacy Policy. Any updates reflecting international legal requirements will be communicated directly within the application portal."
+      },
+      {
+        "type": "heading",
+        "text": "Section 5: Children's Privacy (COPPA & GDPR Compliance)"
+      },
+      {
+        "type": "heading",
+        "text": "• Age Restriction"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Help Desk complies strictly with the US Children's Online Privacy Protection Act (COPPA) and EU GDPR provisions. We do not knowingly collect personal data or contact details from children under 13 (US) or under 16 (EU/UK)."
+      },
+      {
+        "type": "heading",
+        "text": "• Parental Consent"
+      },
+      {
+        "type": "paragraph",
+        "text": "If a minor requires assistance regarding cyber fraud, blackmail, or harassment, the account must be registered by a parent or legal guardian. The chat session must be conducted with explicit parental consent and under direct supervision."
+      },
+      {
+        "type": "heading",
+        "text": "• Immediate Minor Data Removal"
+      },
+      {
+        "type": "paragraph",
+        "text": "If our support team discovers that a minor has shared personal data or sensitive media without verified parental consent, that chat session and all associated data will be purged from our servers immediately and permanently."
+      }
+    ]
+  },
+  {
+    "slug": "terms-and-conditions",
+    "title": "Terms & conditions",
+    "description": "The Cyber Help Desk application’s service agreement.",
+    "source": "app/(screen)/TermsOfService.tsx",
+    "effectiveDate": "August 24, 2026",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Official Service Agreement"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Awareness Welfare Society (CAWS)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Registration No.: BAG/02867"
+      },
+      {
+        "type": "paragraph",
+        "text": "Application :"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cyber Help Desk (Scam Helpline App)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Effective Date :"
+      },
+      {
+        "type": "paragraph",
+        "text": "August 24, 2026"
+      },
+      {
+        "type": "heading",
+        "text": "Section 1: Scope of Services & Global Disclaimer"
+      },
+      {
+        "type": "heading",
+        "text": "• Global Victim Support"
+      },
+      {
+        "type": "paragraph",
+        "text": "The Cyber Help Desk app is a non-profit technology platform connecting victims of cyber and crypto fraud with verified international helplines, government law enforcement agencies (e.g., FBI, Interpol, CBI), and trusted non-governmental organizations (NGOs) worldwide."
+      },
+      {
+        "type": "heading",
+        "text": "• Non-Exclusive Support"
+      },
+      {
+        "type": "paragraph",
+        "text": "CAWS does not claim to be the sole or exclusive service provider globally. Our objective is to act as a bridge, aggregating verified global helplines into a single platform so victims can access timely assistance regardless of their geographic location."
+      },
+      {
+        "type": "heading",
+        "text": "• Best Effort Assistance"
+      },
+      {
+        "type": "paragraph",
+        "text": "Our support team and AI systems operate strictly on a \"best-effort\" basis. CAWS is not legally liable for service delays or disruptions caused by unforeseen events, natural disasters, floods, storms, or internet/telecom outages (Force Majeure)."
+      },
+      {
+        "type": "heading",
+        "text": "Section 2: Volunteer & AI Interaction Protocols"
+      },
+      {
+        "type": "heading",
+        "text": "• Anonymity for Privacy"
+      },
+      {
+        "type": "paragraph",
+        "text": "During support chat sessions, volunteers are only permitted to view the victim’s name and gender. Contact details (email address, phone number, and IP address) are masked and technically restricted from volunteer access."
+      },
+      {
+        "type": "heading",
+        "text": "• Location Services & Emergency SOS"
+      },
+      {
+        "type": "paragraph",
+        "text": "The Cyber Help Desk application utilizes device location services (foreground GPS and approximate network GeoIP) solely to empower user safety. Location access is active only when granted by the user to: (1) Transmit live GPS coordinates and location details during an Emergency SOS trigger; (2) Enable voluntary live location sharing within support chat rooms; (3) Automatically signpost the closest local police stations, cyber crime cells, and government emergency helplines; and (4) Identify regional crime Black Spot high-risk zones and commercial traffic restriction windows. We do not track or record your location continuously in the background."
+      },
+      {
+        "type": "heading",
+        "text": "• Identity Verification for Sensitive Cases"
+      },
+      {
+        "type": "paragraph",
+        "text": "For cases involving Non-Consensual Intimate Imagery (NCII), unauthorized adult media, or non-consensual personal data distribution (violating policies of platforms like Google and Meta), our partnership with the StopNCII Global Alliance authorizes us to act on the victim's behalf. To prevent abuse by bad actors, our team may request valid identification to verify the victim’s identity before submitting takedown requests."
+      },
+      {
+        "type": "heading",
+        "text": "Section 3: Crisis Intervention & Suicide Prevention"
+      },
+      {
+        "type": "heading",
+        "text": "• Joint AI & Expert Counseling"
+      },
+      {
+        "type": "paragraph",
+        "text": "If the system or volunteer team identifies that a victim is under extreme distress, expressing suicidal ideation, or at risk of self-harm, crisis counseling is initiated immediately through a combined workflow of trained volunteers and specialized AI systems."
+      },
+      {
+        "type": "heading",
+        "text": "• Emergency Law Enforcement Notification"
+      },
+      {
+        "type": "paragraph",
+        "text": "Preserving human life is our highest priority. If an imminent threat to life is detected, CAWS reserves the legal right to share user-provided location data with local or international emergency responders and law enforcement."
+      },
+      {
+        "type": "heading",
+        "text": "Section 4: Chat Lifecycle & Automatic Data Deletion"
+      },
+      {
+        "type": "heading",
+        "text": "• Inactivity Timeout"
+      },
+      {
+        "type": "paragraph",
+        "text": "If no communication is received from the victim for 24 hours, the system temporarily pauses the chat and sends a notification inquiring if the issue has been resolved."
+      },
+      {
+        "type": "heading",
+        "text": "• User Control & Immediate Deletion"
+      },
+      {
+        "type": "paragraph",
+        "text": "In addition to automated timeouts, users retain full ownership of their data. A user can select the \"Permanently Close / Delete Chat\" button inside the app at any time. Selecting this instantly and permanently deletes the entire chat history, shared location, images, videos, and uploaded identification documents from our active databases, servers, and backups. This deletion is irreversible."
+      },
+      {
+        "type": "heading",
+        "text": "• Permanent Data Purging (Zero-Knowledge Architecture)"
+      },
+      {
+        "type": "paragraph",
+        "text": "If no response is received within an additional 24 hours (48 hours total), the chat session is permanently closed. Upon closure, all chat logs, media, locations, and identity records are permanently purged. This action is irreversible, even by system administrators."
+      },
+      {
+        "type": "heading",
+        "text": "• Minimal Account Retention"
+      },
+      {
+        "type": "paragraph",
+        "text": "To ensure continued access to free verification tools, only the user's primary name and login email are retained. If assistance is needed after data purging, the user must initiate a new chat session, as no prior context is stored."
+      },
+      {
+        "type": "heading",
+        "text": "Section 5: User Consent & Agreement"
+      },
+      {
+        "type": "paragraph",
+        "text": "By accessing or utilizing the Cyber Help Desk application, you acknowledge and agree to abide by these Terms & Conditions. Our mission is to empower and protect victims through awareness, rapid signposting, and ethical support."
+      }
+    ]
+  },
+  {
+    "slug": "ground-verification",
+    "title": "Ground verification",
+    "description": "Understanding identity fraud and the purpose of verification.",
+    "source": "app/(screen)/groundVerification.tsx",
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "🛡️ Why is ground verification necessary?"
+      },
+      {
+        "type": "paragraph",
+        "text": "In today's digital and high-tech era, fraud methods have also evolved. Criminals are no longer limited to forging documents, but are using new technologies:"
+      },
+      {
+        "type": "paragraph",
+        "text": "• Deepfake Face: Creating fake videos using someone else's face."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Deep Voice: Speaking as if someone else is speaking."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Fake Documents: Providing fake Aadhaar, PAN, passport, or company registration."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Fake Location: Changing GPS or IP address to show a false location."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Deep Photo Editing: Editing photos to make them appear real."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Fake Marriage Proposals: Creating fake identities in online relationships to defraud people in the name of marriage or money."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Fraud Websites / Social Accounts: Extorting money from people by creating fake websites, social media pages, or companies."
+      },
+      {
+        "type": "paragraph",
+        "text": "👉 Common citizens, businesses, students, and even government institutions are falling victim to these practices."
+      },
+      {
+        "type": "heading",
+        "text": "⚖️ Legal Basis"
+      },
+      {
+        "type": "paragraph",
+        "text": "Indian law gives citizens the right to verify the authenticity of the other party before entering into any transaction, relationship, or contract:"
+      },
+      {
+        "type": "paragraph",
+        "text": "• IPC Sections 415 and 420: Protection against fraud and deception."
+      },
+      {
+        "type": "paragraph",
+        "text": "• IT Act 2000 (Section 43 & 66D): Protection against online fraud and identity theft."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Consumer Protection Act 2019: Consumers' right to protection from fraud and verification."
+      },
+      {
+        "type": "paragraph",
+        "text": "• Indian Contract Act 1872: A contract is valid only if consent is not obtained through fraud."
+      },
+      {
+        "type": "heading",
+        "text": "🌍 NGO's Objective"
+      },
+      {
+        "type": "paragraph",
+        "text": "The objective of Cyber Awareness Welfare Society (CAWS) is:"
+      },
+      {
+        "type": "paragraph",
+        "text": "• Protecting citizens from fraud"
+      },
+      {
+        "type": "paragraph",
+        "text": "• Supporting the police and administration"
+      },
+      {
+        "type": "paragraph",
+        "text": "• Empowering every citizen to undergo ground verification before entering into any relationship, transaction, or contract"
+      },
+      {
+        "type": "paragraph",
+        "text": "• Increasing trust and transparency in society"
+      },
+      {
+        "type": "heading",
+        "text": "📢 Message (for the police and the public)"
+      },
+      {
+        "type": "paragraph",
+        "text": "\"Our NGO does not spy on any individual or organization. We only help citizens who want to avoid fraud. Every step we take is transparent and within the ambit of the law. We believe that an informed citizen is a safe citizen. Our objective is—protection from fraud, citizen trust, and transparency in society.\""
+      },
+      {
+        "type": "heading",
+        "text": "✅ Conclusion"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ground verification is not just a service, but a safety net. This facility benefits citizens, the police, and society. CAWS's true vision: \"We exist to prevent fraud, not to violate anyone's privacy.\" \"That’s our mission—to make every citizen safe and informed.\""
+      },
+      {
+        "type": "heading",
+        "text": "I liked an item from social media/online platforms 👉"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify the item/vehicle owner to ensure that the actual person selling the item/vehicle is not the one selling it. I'm not sure if someone else is misusing their photo or identity, as is seen in fraud cases on OLX or other online platforms."
+      },
+      {
+        "type": "heading",
+        "text": "Before buying or selling items from a company/individual"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify the company/individual on the ground before finalizing a deal."
+      },
+      {
+        "type": "heading",
+        "text": "I liked an online relationship (boy/girl) 👉"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify before taking the relationship forward to ensure that the person is genuine and not using Deepfake Face, AI Voice, or other technology to mislead me. This will help me avoid any future financial or emotional losses."
+      },
+      {
+        "type": "heading",
+        "text": "Tenant/Landlord Verification"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify before renting a house/shop."
+      },
+      {
+        "type": "heading",
+        "text": "Job/Domestic Help Verification"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify an employee, driver, helper, or domestic help before hiring them."
+      },
+      {
+        "type": "heading",
+        "text": "Business Partner/Investor Verification"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify the background of a new partner or investor before joining them."
+      },
+      {
+        "type": "heading",
+        "text": "Online Transactions/Financial Dealings"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to verify the identity of a person/entity before sending or receiving money."
+      },
+      {
+        "type": "heading",
+        "text": "Social Account/Company/Website/Online Fraud Verification"
+      },
+      {
+        "type": "paragraph",
+        "text": "I want to check the credibility of a social media account, website, or online company to avoid fraud."
+      }
+    ]
+  }
+]
