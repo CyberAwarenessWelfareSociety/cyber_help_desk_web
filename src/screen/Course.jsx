@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, ArrowUpRight, Clock, Award, User } from 'lucide-react';
-import { useGetAllCoursesQuery } from '../store/api/course';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { BookOpen, ArrowUpRight, Clock, Award, User, Pencil, Trash2, ShieldCheck } from 'lucide-react';
+import { toast } from 'sonner';
+import { useDeleteCourseMutation, useGetAllCoursesQuery } from '../store/api/course';
+import { isAdminUser, isTeacherUser, selectCurrentUser } from '../store/reducer/auth';
 import AppContentLayout, { AppDownload } from '../components/AppContentLayout';
 
 // Truncate course description to a limited number of characters cleanly
@@ -12,6 +16,12 @@ function truncateDescription(text, maxChars = 110) {
 }
 
 export default function Course() {
+  const currentUser = useSelector(selectCurrentUser);
+  const isAdmin = isAdminUser(currentUser);
+  const isTeacher = isTeacherUser(currentUser) && !isAdmin;
+  const hasManagementAccess = isAdmin || isTeacher;
+  const [deleteCourse, { isLoading: isDeleting }] = useDeleteCourseMutation();
+  const [deletingCourseId, setDeletingCourseId] = useState(null);
   const {
     data,
     isLoading,
@@ -22,12 +32,51 @@ export default function Course() {
 
   const courses = Array.isArray(data?.data) ? data.data : [];
 
+  const canManageCourse = (course) =>
+    isAdmin ||
+    (isTeacher &&
+      String(course.instructor_id || course.Instructor?.id || '') ===
+        String(currentUser?.id || ''));
+
+  const handleDeleteCourse = async (course) => {
+    if (!canManageCourse(course)) {
+      toast.error('You do not have access to manage this course.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Delete “${course.title}”? This action cannot be undone.`,
+    );
+    if (!confirmed) return;
+
+    try {
+      setDeletingCourseId(course.id);
+      const response = await deleteCourse(course.id).unwrap();
+      toast.success(response?.message || 'Course deleted successfully');
+    } catch (error) {
+      toast.error(error?.data?.message || 'Failed to delete course');
+    } finally {
+      setDeletingCourseId(null);
+    }
+  };
+
   return (
     <AppContentLayout
       title="Learn skills. Build digital confidence."
       eyebrow="COURSES & MY LIBRARY"
       intro="Explore the same course catalogue used by the Cyber Help Desk app. Review instructors, duration, pricing and curriculum before choosing a course."
     >
+      {hasManagementAccess && (
+        <section className="app-teacher-toolbar" aria-label="Teacher course management">
+          <div>
+            <span className="ngo-eyebrow"><ShieldCheck size={15} /> {isAdmin ? 'ADMIN ACCESS' : 'TEACHER ACCESS'}</span>
+            <h2>{isAdmin ? 'Manage all published courses' : 'Manage your published courses'}</h2>
+            <p>{isAdmin ? 'Administrators can edit or remove any course.' : 'Edit course information or remove a course that belongs to your teacher account.'}</p>
+          </div>
+          <Link className="ngo-button" to="/mycourse">Open teacher dashboard <ArrowUpRight size={16} /></Link>
+        </section>
+      )}
+
       <section className="app-feature-grid">
         <article className="app-info-card">
           <BookOpen />
@@ -185,6 +234,25 @@ export default function Course() {
                         View curriculum <ArrowUpRight size={15} />
                       </Link>
                     </div>
+
+                    {canManageCourse(course) && (
+                      <div className="app-course-management" aria-label={`Manage ${course.title}`}>
+                        <Link
+                          className="app-course-edit-btn"
+                          to={`/edit-course/${course.id}`}
+                        >
+                          <Pencil size={15} /> Edit / update
+                        </Link>
+                        <button
+                          type="button"
+                          className="app-course-delete-btn"
+                          onClick={() => handleDeleteCourse(course)}
+                          disabled={isDeleting}
+                        >
+                          <Trash2 size={15} /> {isDeleting && deletingCourseId === course.id ? 'Deleting…' : 'Delete'}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </article>
               );

@@ -72,6 +72,66 @@
 .ngo-links>a:hover {
   color:#6c8236
 }
+.ngo-login-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:11px 14px;
+  border:1px solid #b8c4b3;
+  border-radius:6px;
+  color:#214e3e;
+  background:#f8faf2;
+  transition:background .2s,border-color .2s,transform .2s
+}
+.ngo-login-button:hover {
+  color:#173e36!important;
+  background:#edf2df;
+  border-color:#8fa27f;
+  transform:translateY(-1px)
+}
+.ngo-auth-actions {
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+.ngo-auth-user {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  max-width:130px;
+  color:#51675e;
+  font-size:11px;
+  font-weight:650
+}
+.ngo-auth-user span {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.ngo-logout-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:11px 14px;
+  border:1px solid #d7b7b0;
+  border-radius:6px;
+  color:#923f34;
+  background:#fff8f6;
+  font-size:12px;
+  font-weight:650;
+  cursor:pointer;
+  transition:background .2s,border-color .2s,transform .2s
+}
+.ngo-logout-button:hover:not(:disabled) {
+  background:#fbe8e3;
+  border-color:#bf8175;
+  transform:translateY(-1px)
+}
+.ngo-logout-button:disabled {
+  opacity:.6
+}
 .ngo-button {
   display:inline-flex;
   justify-content:center;
@@ -149,6 +209,67 @@
   align-items:center;
   margin-top:32px;
   flex-wrap:wrap
+}
+.ngo-hero-download {
+  margin-top:25px
+}
+.ngo-hero-download>span {
+  display:block;
+  margin-bottom:10px;
+  color:#71806f;
+  font-size:9px;
+  font-weight:750;
+  letter-spacing:.14em
+}
+.ngo-store-buttons {
+  display:flex;
+  max-width:380px;
+  gap:10px;
+  flex-wrap:wrap
+}
+.ngo-store-button {
+  min-width:165px;
+  min-height:52px;
+  padding:8px 14px;
+  border:1px solid #315d4d;
+  border-radius:9px;
+  background:#173e36;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  flex:1 1 165px;
+  box-shadow:0 7px 18px #173e361b;
+  transition:transform .2s,background .2s,box-shadow .2s
+}
+.ngo-store-button:hover {
+  background:#285847;
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px #173e3626
+}
+.ngo-store-button img {
+  width:28px;
+  height:28px;
+  object-fit:contain;
+  flex-shrink:0
+}
+.ngo-store-button img.apple {
+  filter:invert(1)
+}
+.ngo-store-button span {
+  display:flex;
+  flex-direction:column;
+  line-height:1.05
+}
+.ngo-store-button small {
+  font-size:7px;
+  letter-spacing:.09em;
+  margin-bottom:4px
+}
+.ngo-store-button strong {
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:-.01em
 }
 .ngo-text-link {
   display:inline-flex;
@@ -664,6 +785,9 @@
   gap:15px;
   font-size:11px
 }
+.ngo-auth-user {
+  display:none
+}
 .ngo-brand {
   font-size:16px
 }
@@ -701,6 +825,94 @@
 }
 
 @media(max-width:780px) {
+  .ngo-site {
+  line-height:1.65
+}
+.ngo-topline {
+  font-size:12px
+}
+.ngo-brand span span {
+  font-size:11px
+}
+.ngo-links,.ngo-login-button,.ngo-logout-button {
+  font-size:14px
+}
+.ngo-auth-user {
+  font-size:13px
+}
+.ngo-eyebrow {
+  font-size:12px;
+  line-height:1.45
+}
+.ngo-hero-copy>p {
+  font-size:16px;
+  line-height:1.75
+}
+.ngo-hero-download>span {
+  font-size:11px
+}
+.ngo-store-button small {
+  font-size:10px
+}
+.ngo-text-link,.ngo-button {
+  font-size:14px
+}
+.ngo-hero-note {
+  font-size:13px;
+  line-height:1.5
+}
+.ngo-art-label,.ngo-art-bottom {
+  font-size:10px
+}
+.ngo-art-card {
+  font-size:13px
+}
+.ngo-vision-strip div>span:not(.ngo-eyebrow) {
+  font-size:13px
+}
+.ngo-vision-strip p.ngo-vision-note {
+  font-size:14px
+}
+.ngo-section p {
+  font-size:15px;
+  line-height:1.75
+}
+.ngo-mission-steps {
+  font-size:14px
+}
+.ngo-mission-steps b {
+  font-size:12px
+}
+.ngo-section-heading>p,.ngo-vehicle p {
+  font-size:15px
+}
+.ngo-programme-top>span {
+  font-size:13px
+}
+.ngo-topic-list span {
+  font-size:14px
+}
+.ngo-quiz-label {
+  font-size:12px
+}
+.ngo-quiz-options button,.ngo-quiz-feedback p {
+  font-size:14px
+}
+.ngo-partner-band p,.ngo-help-grid p {
+  font-size:15px
+}
+.ngo-principles>span {
+  font-size:11px
+}
+.ngo-footer h3 {
+  font-size:14px
+}
+.ngo-footer p,.ngo-footer-grid>div>a:not(.ngo-brand) {
+  font-size:14px
+}
+.ngo-footer-bottom {
+  font-size:12px
+}
   .ngo-nav {
   min-height:76px
 }
@@ -726,11 +938,20 @@
   align-items:stretch;
   gap:0
 }
+.ngo-links.is-open .ngo-auth-actions {
+  align-items:stretch;
+  flex-direction:column;
+  padding:8px 14px
+}
+.ngo-links.is-open .ngo-auth-user {
+  display:inline-flex;
+  max-width:none;
+  padding:6px 0
+}
 .ngo-links>a {
   padding:14px
 }
 .ngo-topline {
-  font-size:9px;
   padding-block:9px
 }
 .ngo-topline>a {
@@ -898,6 +1119,29 @@ ol.app-simple-list { list-style: decimal; }
 .app-step-list h3 { font-size: 21px; margin-bottom: 10px; }
 .app-step-list p { max-width: 860px; }
 .app-catalogue { margin-top: 55px; }
+.app-teacher-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin: 0 0 35px;
+  padding: 26px 28px;
+  border: 1px solid #cbd8bc;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f4f7e8 0%, #edf3e8 100%);
+}
+.app-teacher-toolbar h2 {
+  margin: 8px 0 5px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #173e36;
+}
+.app-teacher-toolbar p {
+  color: #647368;
+  font-size: 13px;
+}
+.app-teacher-toolbar .ngo-button { flex-shrink: 0; }
 .app-course-card {
   display: flex;
   flex-direction: column;
@@ -1123,6 +1367,87 @@ ol.app-simple-list { list-style: decimal; }
   background: #33684e;
   transform: translateY(-2px);
 }
+.app-course-management {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 9px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e3e8de;
+}
+.app-course-edit-btn,
+.app-course-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 650;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.app-course-edit-btn {
+  color: #214e3e;
+  border: 1px solid #b8c9b6;
+  background: #f7f9f2;
+}
+.app-course-edit-btn:hover {
+  background: #eaf0df;
+  border-color: #91a78d;
+  transform: translateY(-1px);
+}
+.app-course-delete-btn {
+  color: #a13f34;
+  border: 1px solid #e0bbb4;
+  background: #fff8f6;
+  cursor: pointer;
+}
+.app-course-delete-btn:hover:not(:disabled) {
+  background: #fbe8e3;
+  border-color: #c98b80;
+  transform: translateY(-1px);
+}
+.app-course-delete-btn:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+.class-admin-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 9px 10px;
+  border: 1px solid #c8d6c4;
+  border-radius: 8px;
+  background: #f7faf4;
+  color: #214e3e;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.class-admin-action:hover:not(:disabled) {
+  background: #eaf1e3;
+  border-color: #8fa68a;
+  transform: translateY(-1px);
+}
+.class-admin-action.is-delete {
+  color: #a13f34;
+  border-color: #e0bbb4;
+  background: #fff8f6;
+}
+.class-admin-action.is-delete:hover:not(:disabled) {
+  background: #fbe8e3;
+  border-color: #c98b80;
+}
+.class-admin-action:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
 .app-faq details { border-bottom: 1px solid #dce3d0; padding: 23px 0; }
 .app-faq summary { cursor: pointer; font-size: 18px; font-weight: 550; list-style: disclosure-closed; margin-left: 20px; }
 .app-faq details[open] summary { list-style: disclosure-open; }
@@ -1141,6 +1466,10 @@ ol.app-simple-list { list-style: decimal; }
  .app-about-intro { gap: 30px; }
 }
 @media (max-width: 780px) {
+ .class-admin-action { font-size: 14px; min-height: 44px; }
+ .app-teacher-toolbar { align-items: flex-start; flex-direction: column; padding: 22px; }
+ .app-teacher-toolbar .ngo-button { width: 100%; }
+ .app-course-management { grid-template-columns: 1fr 1fr; }
  .app-feature-grid, .app-about-intro, .app-document-layout { grid-template-columns: 1fr; }
  .app-info-card { padding: 24px; }
  .app-toc { position: static; max-height: 260px; border: 1px solid #dfe5d5; padding: 20px; border-radius: 6px; }

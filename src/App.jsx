@@ -55,8 +55,11 @@ import AdminCourse from "./screen/AdminCourse";
 import AdminMaterial from "./screen/AdminMaterial";
 import AdminVideo from "./screen/AdminVideo";
 import AdminQuestion from "./screen/AdminQuestion";
+import AdminResults from "./screen/AdminResults";
 import CreateCourse from "./screen/CreateCourse";
 import DeleteAccount from "./screen/DeleteAccount";
+import RequireAuth from "./components/RequireAuth";
+import RequireTeacher from "./components/RequireTeacher";
 
 const GA_MEASUREMENT_ID = "G-T9GW0VZR1Q";
 
@@ -109,7 +112,6 @@ const AppContent = () => {
         <Route path="/phishing-attack" element={<PhishingAttack />} />
         <Route path="/ransomware" element={<Ransomware />} />
         <Route path="/our-team" element={<ComingSoonPage />} />
-        <Route path="/library" element={<Library />} />
         <Route path="/certified-ethical-hacker" element={<CEH />} />
         <Route
           path="/certified-penetration-testing-professional"
@@ -131,21 +133,27 @@ const AppContent = () => {
         <Route path="/auth/apple" element={<AppleCallback />} />
         <Route path="/auth/callback" element={<GoogleCallback />} />
         <Route path="/course" element={<Course />} />
-        <Route path="/mycourse" element={<MyCourse />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
         <Route path="/classes/:id" element={<Classes />} />
-        <Route path="/edit-course/:id" element={<EditCourse />} />
-        <Route path="/create-course" element={<CreateCourse />} />
-        <Route path="/admin-classes/:id" element={<AdminCourse />} />
-        <Route path="/video/:id" element={<Video />} />
-        <Route path="/admin-video/:id" element={<AdminVideo />} />
-        <Route path="/live-class/:id" element={<LiveClass />} />
-        <Route path="/materials/:id" element={<ClassMaterials />} />
-        <Route path="/admin-materials/:id" element={<AdminMaterial />} />
-        <Route path="/admin-question/:id" element={<AdminQuestion />} />
-        <Route path="/questions/:id" element={<Question />} />
-        <Route path="/view-result/:id" element={<ViewResult />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/library" element={<Library />} />
+          <Route path="/mycourse" element={<MyCourse />} />
+          <Route path="/video/:id" element={<Video />} />
+          <Route path="/live-class/:id" element={<LiveClass />} />
+          <Route path="/materials/:id" element={<ClassMaterials />} />
+          <Route path="/questions/:id" element={<Question />} />
+          <Route path="/view-result/:id" element={<ViewResult />} />
+          <Route element={<RequireTeacher />}>
+            <Route path="/edit-course/:id" element={<EditCourse />} />
+            <Route path="/create-course" element={<CreateCourse />} />
+            <Route path="/admin-classes/:id" element={<AdminCourse />} />
+            <Route path="/admin-video/:id" element={<AdminVideo />} />
+            <Route path="/admin-materials/:id" element={<AdminMaterial />} />
+            <Route path="/admin-question/:id" element={<AdminQuestion />} />
+            <Route path="/admin-results/:id" element={<AdminResults />} />
+          </Route>
+        </Route>
       </Routes>
 
       {!hideFooter && <Footer />}

@@ -1,233 +1,419 @@
-import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { Phone, Lock, LogIn } from "lucide-react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  KeyRound,
+  LockKeyhole,
+  Phone,
+  ShieldCheck,
+  Smartphone,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "@/components/Home/Header";
-import { Button } from "@/components/ui/button";
-import { useLoginMutation } from "@/store/api/auth";
-import { saveAuthToStorage } from "@/store/reducer/auth";
+import {
+  useLoginStep1Mutation,
+  useLoginStep2Mutation,
+} from "@/store/api/auth";
+import {
+  saveAuthToStorage,
+  selectCurrentToken,
+  selectCurrentUser,
+} from "@/store/reducer/auth";
 
-// Vector logos
-const GoogleIcon = () => (
-  <svg className="w-5 h-5" viewBox="0 0 24 24">
-    <path
-      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-      fill="#4285F4"
-    />
-    <path
-      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-      fill="#34A853"
-    />
-    <path
-      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-      fill="#FBBC05"
-    />
-    <path
-      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-      fill="#EA4335"
-    />
-  </svg>
-);
+const RESEND_SECONDS = 30;
 
-const AppleIcon = () => (
-  <svg className="w-5 h-5 fill-current text-black" viewBox="0 0 170 170">
-    <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.77-7.9-12.24-14.46-6.19-9.12-10.9-19.34-14.13-30.68-3.23-11.33-4.85-22.38-4.85-33.14 0-14.46 3.63-26.6 10.89-36.42 7.26-9.82 16.37-14.86 27.34-15.11 4.79 0 10.08 1.25 15.86 3.75 5.78 2.5 9.77 3.81 11.97 3.93 1.93-.24 6.07-1.63 12.43-4.17 6.36-2.54 11.83-3.69 16.4-3.45 12.28.61 22.09 4.96 29.43 13.06-10.78 6.53-16.05 15.54-15.81 27.03.24 9.07 3.69 16.73 10.35 22.98 6.66 6.25 14.6 9.72 23.82 10.41-2.43 7.37-5.46 14.73-9.08 22.08zM119.22 33.64c0-7.39 2.65-14.47 7.95-21.24 5.3-6.77 11.97-11.08 20.02-12.4-1.09 7.39-4.04 14.4-8.85 21.03-4.81 6.63-11.16 10.83-19.12 12.61z" />
-  </svg>
-);
+const getErrorMessage = (error, fallback) =>
+  error?.data?.message || error?.error || fallback;
+
+const maskPhone = (phone) => `+91 ••••••${phone.slice(-4)}`;
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
+  const token = useSelector(selectCurrentToken);
+  const currentUser = useSelector(selectCurrentUser);
+  const requestedLocation = location.state?.from;
+  const redirectTo = requestedLocation
+    ? `${requestedLocation.pathname}${requestedLocation.search}${requestedLocation.hash}`
+    : "/";
 
+  const [step, setStep] = useState("credentials");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [otp, setOtp] = useState("");
+  const [clientId, setClientId] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [resendSeconds, setResendSeconds] = useState(0);
+  const otpInputRef = useRef(null);
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [loginStep1, { isLoading: isSendingOtp }] =
+    useLoginStep1Mutation();
+  const [loginStep2, { isLoading: isVerifyingOtp }] =
+    useLoginStep2Mutation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+  useEffect(() => {
+    if (resendSeconds <= 0) return undefined;
+    const timer = window.setInterval(
+      () => setResendSeconds((seconds) => Math.max(0, seconds - 1)),
+      1000,
+    );
+    return () => window.clearInterval(timer);
+  }, [resendSeconds]);
+
+  useEffect(() => {
+    if (step === "otp") otpInputRef.current?.focus();
+  }, [step]);
+
+  useEffect(() => {
+    if (token && currentUser?.id) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [currentUser?.id, navigate, redirectTo, token]);
+
+  const sendOtp = async ({ isResend = false } = {}) => {
+    setError("");
+    setSuccessMessage("");
 
     try {
-      const resp = await login({ phone_no: phone, password }).unwrap();
-
-      // ✅ Save auth to Redux + localStorage
-      dispatch(saveAuthToStorage(resp));
-
-      // ✅ Redirect after login
-      navigate("/");
-    } catch (err) {
-      setError(err?.data?.message || "Login failed. Please try again.");
+      const response = await loginStep1({ phone_no: phone, password }).unwrap();
+      setClientId(response.client_id);
+      setOtp("");
+      setStep("otp");
+      setResendSeconds(RESEND_SECONDS);
+      setSuccessMessage(
+        isResend
+          ? "A new verification code has been sent."
+          : "Verification code sent successfully.",
+      );
+    } catch (requestError) {
+      setError(
+        getErrorMessage(
+          requestError,
+          "We could not send the verification code. Please try again.",
+        ),
+      );
     }
   };
 
-  const handleGoogleLogin = () => {
-    const clientId =
-      "565889692174-63dkgig4cjj7mk4p6l7luqruoh3u49sv.apps.googleusercontent.com";
-    const redirectUri =
-      window.location.origin.includes("cyberawareness.ngo")
-        ? "https://cyberawareness.ngo/auth/google/callback"
-        : `${window.location.origin}/auth/google/callback`;
-    const nonce = Math.random().toString(36).substring(2, 15);
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(
-      clientId
-    )}&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}&response_type=token%20id_token&scope=openid%20profile%20email&nonce=${nonce}`;
-    window.location.href = authUrl;
+  const handleCredentialsSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+
+    if (!/^\d{10}$/.test(phone)) {
+      setError("Enter a valid 10-digit registered mobile number.");
+      return;
+    }
+
+    if (!password) {
+      setError("Enter your password to continue.");
+      return;
+    }
+
+    await sendOtp();
   };
 
-  const handleAppleLogin = () => {
-    const clientId = "com.cyberhelpdesk.service";
-    const redirectUri = "https://cyberawareness.ngo/auth/apple/callback";
-    const state = Math.random().toString(36).substring(2, 15);
-    const authUrl = `https://appleid.apple.com/auth/authorize?client_id=${encodeURIComponent(
-      clientId
-    )}&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}&response_type=code%20id_token&scope=name%20email&response_mode=form_post&state=${state}`;
-    window.location.href = authUrl;
+  const handleOtpSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setSuccessMessage("");
+
+    if (!/^\d{4}$/.test(otp)) {
+      setError("Enter the 4-digit verification code.");
+      return;
+    }
+
+    try {
+      const response = await loginStep2({
+        client_id: clientId,
+        phone_no: phone,
+        otp,
+      }).unwrap();
+
+      await dispatch(saveAuthToStorage(response));
+      navigate(redirectTo, { replace: true });
+    } catch (requestError) {
+      setError(
+        getErrorMessage(
+          requestError,
+          "The verification code is invalid or has expired.",
+        ),
+      );
+    }
+  };
+
+  const handleEditPhone = () => {
+    setStep("credentials");
+    setOtp("");
+    setClientId(null);
+    setError("");
+    setSuccessMessage("");
+    setResendSeconds(0);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#f7f8f1] text-[#173e36] flex flex-col">
       <Header />
 
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <motion.div
+      <main className="relative flex-1 overflow-hidden px-5 py-10 sm:px-8 sm:py-14 lg:py-20">
+        <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#dce7a5]/35 blur-3xl" />
+        <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[#9fc9b3]/25 blur-3xl" />
+
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8"
+          className="relative mx-auto grid w-full max-w-5xl overflow-hidden rounded-[28px] border border-[#dce3d8] bg-white shadow-[0_28px_80px_rgba(27,67,55,0.12)] lg:grid-cols-[0.92fr_1.08fr]"
         >
-          {/* Title */}
-          <div className="text-center mb-6">
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.1 }}
-              className="inline-flex items-center justify-center w-14 h-14 bg-emerald-100 rounded-2xl mb-3"
-            >
-              <LogIn className="w-7 h-7 text-emerald-600" />
-            </motion.div>
-
-            <h1 className="text-3xl font-extrabold text-gray-900">
-              Welcome Back
-            </h1>
-            <p className="text-gray-500 mt-1.5 text-sm">Login to Cyber Help Desk</p>
-          </div>
-
-          {/* Social Auth Buttons */}
-          <div className="space-y-2.5 mb-6">
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold text-sm transition shadow-sm cursor-pointer"
-            >
-              <GoogleIcon />
-              <span>Continue with Google</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleAppleLogin}
-              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl bg-black hover:bg-gray-900 text-white font-semibold text-sm transition shadow-sm cursor-pointer"
-            >
-              <AppleIcon />
-              <span>Continue with Apple</span>
-            </button>
-          </div>
-
-          {/* Divider */}
-          <div className="flex items-center my-5">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider">
-              Or with phone
-            </span>
-            <div className="flex-1 h-px bg-gray-200" />
-          </div>
-
-          {/* Error */}
-          {error && (
-            <p className="text-red-600 text-sm text-center mb-4 bg-red-50 p-2.5 rounded-xl border border-red-100">
-              {error}
-            </p>
-          )}
-
-          {/* Form */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Phone */}
+          <div className="relative hidden overflow-hidden bg-[#173e36] p-10 text-white lg:flex lg:flex-col lg:justify-between">
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full border border-white/10" />
+            <div className="absolute -right-12 -top-12 h-64 w-64 rounded-full border border-white/10" />
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Phone Number
-              </label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="tel"
-                  placeholder="Enter phone number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm"
-                  required
-                />
-              </div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#e5edb5] uppercase">
+                <ShieldCheck className="h-4 w-4" /> Secure member access
+              </span>
+              <h2 className="mt-8 max-w-sm text-4xl leading-[1.12] font-medium tracking-[-0.04em]">
+                Two steps.<br />One safer account.
+              </h2>
+              <p className="mt-5 max-w-sm text-sm leading-7 text-white/65">
+                Your password confirms what you know. A one-time code sent to
+                your registered phone confirms it is really you.
+              </p>
             </div>
 
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm"
-                  required
-                />
-              </div>
+            <div className="mt-16 space-y-4">
+              {[
+                [<LockKeyhole key="password" className="h-4 w-4 text-[#dce7a5]" />, "Your password is checked securely"],
+                [<Smartphone key="phone" className="h-4 w-4 text-[#dce7a5]" />, "OTP goes only to your registered number"],
+                [<CheckCircle2 key="access" className="h-4 w-4 text-[#dce7a5]" />, "Access starts after both checks pass"],
+              ].map(([icon, text]) => (
+                <div key={text} className="flex items-center gap-3 text-sm text-white/80">
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">
+                    {icon}
+                  </span>
+                  {text}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-6 py-9 sm:px-12 sm:py-12 lg:px-16 lg:py-14">
+            <div className="mb-8 flex items-center gap-2" aria-label="Login progress">
+              <span className="h-1.5 flex-1 rounded-full bg-[#214e3e]" />
+              <span
+                className={`h-1.5 flex-1 rounded-full transition-colors ${
+                  step === "otp" ? "bg-[#214e3e]" : "bg-[#e6ebe3]"
+                }`}
+              />
             </div>
 
-            {/* Forgot Password */}
-            <div className="flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-xs text-emerald-600 hover:underline"
-              >
-                Forgot password?
-              </Link>
+            <AnimatePresence mode="wait" initial={false}>
+              {step === "credentials" ? (
+                <motion.div
+                  key="credentials"
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <div className="mb-8">
+                    <span className="text-[11px] font-bold tracking-[0.14em] text-[#71874c] uppercase">
+                      Step 1 of 2
+                    </span>
+                    <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#173e36] sm:text-4xl">
+                      Welcome back
+                    </h1>
+                    <p className="mt-3 text-sm leading-6 text-[#68756d]">
+                      Enter your registered mobile number and password.
+                    </p>
+                  </div>
+
+                  {error && (
+                    <div role="alert" className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
+
+                  <form className="space-y-5" onSubmit={handleCredentialsSubmit} noValidate>
+                    <div>
+                      <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[#284b41]">
+                        Registered mobile number
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-[#74827a]" />
+                        <span className="absolute top-1/2 left-12 -translate-y-1/2 border-r border-[#d9dfd7] pr-3 text-sm font-semibold text-[#334f47]">
+                          +91
+                        </span>
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          inputMode="numeric"
+                          autoComplete="tel-national"
+                          placeholder="10-digit number"
+                          value={phone}
+                          onChange={(event) =>
+                            setPhone(event.target.value.replace(/\D/g, "").slice(0, 10))
+                          }
+                          className="h-14 w-full rounded-xl border border-[#d8ded6] bg-[#fbfcf8] pr-4 pl-[92px] text-base text-[#173e36] outline-none transition placeholder:text-[#9aa49d] focus:border-[#5c7959] focus:ring-4 focus:ring-[#dce7a5]/45"
+                          aria-describedby="phone-hint"
+                          required
+                        />
+                      </div>
+                      <p id="phone-hint" className="mt-2 text-xs text-[#7b877f]">
+                        Use the number linked to your CAWS account.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[#284b41]">
+                        Password
+                      </label>
+                      <div className="relative">
+                        <LockKeyhole className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-[#74827a]" />
+                        <input
+                          id="password"
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          autoComplete="current-password"
+                          placeholder="Enter your password"
+                          value={password}
+                          onChange={(event) => setPassword(event.target.value)}
+                          className="h-14 w-full rounded-xl border border-[#d8ded6] bg-[#fbfcf8] pr-12 pl-12 text-base text-[#173e36] outline-none transition placeholder:text-[#9aa49d] focus:border-[#5c7959] focus:ring-4 focus:ring-[#dce7a5]/45"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword((visible) => !visible)}
+                          className="absolute top-1/2 right-3 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg text-[#68776e] transition hover:bg-[#edf1e8] hover:text-[#173e36]"
+                          aria-label={showPassword ? "Hide password" : "Show password"}
+                        >
+                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSendingOtp}
+                      className="mt-2 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#214e3e] px-5 text-sm font-semibold text-white transition hover:bg-[#2d6650] focus:ring-4 focus:ring-[#214e3e]/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {isSendingOtp ? "Checking details…" : "Continue to verification"}
+                      {!isSendingOtp && <ArrowRight className="h-4 w-4" />}
+                    </button>
+                  </form>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="otp"
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <button
+                    type="button"
+                    onClick={handleEditPhone}
+                    className="mb-7 inline-flex items-center gap-2 text-sm font-semibold text-[#516d55] transition hover:text-[#173e36]"
+                  >
+                    <ArrowLeft className="h-4 w-4" /> Edit login details
+                  </button>
+
+                  <div className="mb-7">
+                    <span className="text-[11px] font-bold tracking-[0.14em] text-[#71874c] uppercase">
+                      Step 2 of 2
+                    </span>
+                    <div className="mt-4 grid h-14 w-14 place-items-center rounded-2xl bg-[#edf2d1] text-[#214e3e]">
+                      <KeyRound className="h-7 w-7" />
+                    </div>
+                    <h1 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-[#173e36] sm:text-4xl">
+                      Check your phone
+                    </h1>
+                    <p className="mt-3 text-sm leading-6 text-[#68756d]">
+                      Enter the 4-digit code sent to <strong className="font-semibold text-[#284b41]">{maskPhone(phone)}</strong>.
+                    </p>
+                  </div>
+
+                  {successMessage && (
+                    <div role="status" className="mb-4 flex items-start gap-2 rounded-xl border border-[#d7e2b5] bg-[#f4f7e8] px-4 py-3 text-sm text-[#47613d]">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+                      {successMessage}
+                    </div>
+                  )}
+
+                  {error && (
+                    <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleOtpSubmit} noValidate>
+                    <label htmlFor="otp" className="mb-2 block text-sm font-semibold text-[#284b41]">
+                      Verification code
+                    </label>
+                    <input
+                      ref={otpInputRef}
+                      id="otp"
+                      name="otp"
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      placeholder="• • • •"
+                      value={otp}
+                      onChange={(event) =>
+                        setOtp(event.target.value.replace(/\D/g, "").slice(0, 4))
+                      }
+                      className="h-16 w-full rounded-xl border border-[#d8ded6] bg-[#fbfcf8] px-5 text-center text-2xl font-semibold tracking-[0.65em] text-[#173e36] outline-none transition placeholder:text-[#b2bbb4] focus:border-[#5c7959] focus:ring-4 focus:ring-[#dce7a5]/45"
+                      aria-describedby="otp-hint"
+                      required
+                    />
+                    <p id="otp-hint" className="mt-2 text-xs text-[#7b877f]">
+                      The code expires shortly and can be used only once.
+                    </p>
+
+                    <button
+                      type="submit"
+                      disabled={isVerifyingOtp}
+                      className="mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#214e3e] px-5 text-sm font-semibold text-white transition hover:bg-[#2d6650] focus:ring-4 focus:ring-[#214e3e]/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {isVerifyingOtp ? "Verifying code…" : "Verify and sign in"}
+                      {!isVerifyingOtp && <ShieldCheck className="h-4 w-4" />}
+                    </button>
+                  </form>
+
+                  <div className="mt-6 text-center text-sm text-[#68756d]">
+                    Didn’t receive the code?{" "}
+                    <button
+                      type="button"
+                      onClick={() => sendOtp({ isResend: true })}
+                      disabled={resendSeconds > 0 || isSendingOtp}
+                      className="font-semibold text-[#4d704e] hover:underline disabled:cursor-not-allowed disabled:text-[#9aa49d] disabled:no-underline"
+                    >
+                      {isSendingOtp
+                        ? "Sending…"
+                        : resendSeconds > 0
+                          ? `Resend in ${resendSeconds}s`
+                          : "Resend OTP"}
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div className="mt-8 border-t border-[#e5e9e2] pt-5 text-center text-xs leading-5 text-[#7b877f]">
+              Never share your password or OTP with anyone, including CAWS staff.
             </div>
-
-            {/* Login Button */}
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl flex items-center justify-center gap-2 text-base font-semibold disabled:opacity-60 cursor-pointer"
-            >
-              <LogIn className="w-4 h-4" />
-              {isLoading ? "Logging in..." : "Login with Phone"}
-            </Button>
-          </form>
-
-          {/* Register */}
-          <p className="text-center text-gray-600 text-sm mt-5">
-            Don’t have an account?{" "}
-            <Link
-              to="/register"
-              className="text-emerald-600 font-semibold hover:underline"
-            >
-              Create one
-            </Link>
-          </p>
-        </motion.div>
-      </div>
+          </div>
+        </motion.section>
+      </main>
     </div>
   );
 }

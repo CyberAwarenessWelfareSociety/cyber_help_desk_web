@@ -1,5 +1,5 @@
 export const appStores = {
-  android: 'https://play.google.com/store/apps/details?id=com.cybercrime',
+  android: 'https://play.google.com/store/apps/details?id=com.cybercrime&pcampaignid=web_share',
   ios: 'https://apps.apple.com/in/app/cyber-help-desk/id6751521460',
 };
 export const appFeatures = [

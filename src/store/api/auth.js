@@ -9,7 +9,6 @@ export const authApiSlice = apiWithTag.injectEndpoints({
     // ================= AUTH =================
     login: builder.mutation({
       query: (credentials) => {
-        console.log(credentials);
         return {
           url: "/api/login",
           method: "POST",
@@ -19,6 +18,26 @@ export const authApiSlice = apiWithTag.injectEndpoints({
           body: credentials,
         };
       },
+    }),
+    loginStep1: builder.mutation({
+      query: (credentials) => ({
+        url: "/api/login/v1/step1",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: credentials,
+      }),
+    }),
+    loginStep2: builder.mutation({
+      query: (credentials) => ({
+        url: "/api/login/v1/step2",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: credentials,
+      }),
     }),
     googleAuth: builder.mutation({
       query: (credentials) => ({
@@ -249,6 +268,8 @@ params: { token: credentials },
 // ================= HOOK EXPORTS =================
 export const {
   useLoginMutation,
+  useLoginStep1Mutation,
+  useLoginStep2Mutation,
   useGoogleAuthMutation,
   useAppleAuthMutation,
   useSend_otpMutation,

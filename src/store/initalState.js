@@ -58,16 +58,13 @@ const rawBaseQuery = fetchBaseQuery({
 
 // ================= RE-AUTH HANDLER =================
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-  let result = await rawBaseQuery(args, api, extraOptions);
+  const result = await rawBaseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 401) {
+  if (result?.error?.status === 401 && getToken()) {
     console.warn("Unauthorized – logging out");
 
     localStorage.removeItem("auth");
     api.dispatch(logout());
-
-    // Optional retry (usually not needed after logout)
-    result = await rawBaseQuery(args, api, extraOptions);
   }
 
   return result;
@@ -77,7 +74,16 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User"],
+  tagTypes: [
+    "User",
+    "Course",
+    "Class",
+    "Material",
+    "Question",
+    "Answer",
+    "videos",
+    "videoProgress",
+  ],
   endpoints: (builder) => ({
     userDetail: builder.query({
       query: () => ({

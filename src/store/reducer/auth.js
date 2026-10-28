@@ -1,5 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const ADMIN_ROLES = ["ADMIN", "SUPER_ADMIN", "SUPERADMIN"];
+
+export const getClientRole = (client) =>
+  String(
+    client?.role ||
+      client?.client_type ||
+      client?.clientType ||
+      client?.type ||
+      "USER",
+  )
+    .trim()
+    .toUpperCase();
+
+export const isAdminUser = (client) => ADMIN_ROLES.includes(getClientRole(client));
+
+export const isTeacherUser = (client) =>
+  isAdminUser(client) ||
+  client?.isteacher === true ||
+  client?.isteacher === 1 ||
+  String(client?.isteacher || "").trim().toLowerCase() === "true";
+
+const normalizeUser = (client) => {
+  if (!client) return null;
+  const role = getClientRole(client);
+
+  return {
+    ...client,
+    role,
+    client_type: role,
+    isteacher: isTeacherUser({ ...client, role }),
+  };
+};
+
 // ================= INITIAL STATE =================
 const initialState = {
   token: null,
@@ -47,11 +80,12 @@ export const saveAuthToStorage =
   (dispatch) => {
     try {
       dispatch(setLoading(true));
-      console.log("Saving auth data to storage:", loginResponse);
       const client = loginResponse?.client || loginResponse?.user;
       if (!loginResponse?.token || !client) {
         throw new Error("Invalid login response");
       }
+
+      const role = getClientRole(client);
 
       const authData = {
         token: loginResponse.token,
@@ -60,7 +94,9 @@ export const saveAuthToStorage =
           phone: client.phone || null,
           name: (client.name || "User").trim(),
           email: client.email || null,
-          role: client.client_type || client.role || "USER",
+          role,
+          client_type: role,
+          isteacher: isTeacherUser(client),
           aadhar_access: Boolean(client.aadhar_access),
           billing_method: client.billing_method || null,
           avatar: client.avatar || null,
@@ -89,7 +125,12 @@ export const loadAuthFromStorage = () => (dispatch) => {
     const authData = JSON.parse(authDataString);
 
     if (authData?.token && authData?.user?.id) {
-      dispatch(setAuth(authData));
+      const normalizedAuthData = {
+        ...authData,
+        user: normalizeUser(authData.user),
+      };
+      localStorage.setItem("auth", JSON.stringify(normalizedAuthData));
+      dispatch(setAuth(normalizedAuthData));
     } else {
       localStorage.removeItem("auth");
     }

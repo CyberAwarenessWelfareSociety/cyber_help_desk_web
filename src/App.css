@@ -231,6 +231,45 @@
 }
 
 /* =========================
+   MOBILE READABILITY
+   Keep compact desktop layouts while ensuring route content remains legible
+   on phones. Form controls stay at 16px to avoid automatic iOS zoom.
+   ========================= */
+@media (max-width: 780px) {
+  html {
+    font-size: 17px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    line-height: 1.6;
+  }
+
+  body .text-xs {
+    font-size: 0.82rem !important;
+    line-height: 1.3rem !important;
+  }
+
+  body .text-sm {
+    font-size: 0.94rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  body [class*="text-[10px]"],
+  body [class*="text-[11px]"] {
+    font-size: 0.8rem !important;
+    line-height: 1.25rem !important;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* =========================
    OPTIONAL: VIDEO APP HELPERS
    (use these classes in JSX)
    ========================= */

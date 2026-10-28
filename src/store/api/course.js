@@ -27,7 +27,7 @@ export const courseApiSlice = apiSlice.injectEndpoints({
       query: ({ userId, id }) => ({
         url: `/api/courses/instructor/${userId}`,
         method: "GET",
-        params: { id },
+        params: id ? { course_id: id } : undefined,
       }),
       providesTags: ["Course"],
     }),

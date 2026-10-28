@@ -25,6 +25,17 @@ export const answerApiSlice = apiSlice.injectEndpoints({
         { type: "Answer", id: `${clientId}-${classId}` },
       ],
     }),
+
+    // ================= TEACHER / ADMIN CLASS RESULTS =================
+    getClassQuizStats: builder.query({
+      query: (classId) => ({
+        url: `/api/answers/classes/${classId}/quiz-stats`,
+        method: "GET",
+      }),
+      providesTags: (result, error, classId) => [
+        { type: "Answer", id: `stats-${classId}` },
+      ],
+    }),
   }),
   overrideExisting: true,
 });
@@ -32,4 +43,5 @@ export const answerApiSlice = apiSlice.injectEndpoints({
 export const {
   useSubmitAnswerMutation,
   useGetClassResultQuery,
+  useGetClassQuizStatsQuery,
 } = answerApiSlice;

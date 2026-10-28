@@ -1,11 +1,33 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Menu, X, ArrowUpRight, ChevronDown, LogIn, LogOut, UserRound } from 'lucide-react';
 import logo from '../../assets/icon.png';
 import documents from '../../data/appDocuments.json';
+import { useLogoutMutation } from '../../store/api/auth';
+import { logout, selectCurrentToken, selectCurrentUser } from '../../store/reducer/auth';
 import '../../styles/ngo.css';
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
+  const [logoutSession, { isLoading: isLoggingOut }] = useLogoutMutation();
+  const isAuthenticated = Boolean(token && user?.id);
+
+  const handleLogout = async () => {
+    try {
+      await logoutSession({}).unwrap();
+    } catch {
+      // Local cleanup still guarantees that an expired or missing server session signs out.
+    } finally {
+      dispatch(logout());
+      setOpen(false);
+      navigate('/', { replace: true });
+    }
+  };
+
   const closeNavigation = event => {
     if (!event.target.closest('a')) return;
     setOpen(false);
@@ -18,5 +40,5 @@ export default function Header() {
         }
       }}>
  <details className="app-nav-dropdown"><summary>Who we are <ChevronDown size={13} /></summary><div className="app-dropdown-panel"><Link to="/about">About CAWS · overview</Link>{documents.map(doc => <Link key={doc.slug} to={`/${doc.slug}`}>{doc.title}</Link>)}<Link to="/contact-us">Contact us</Link></div></details>
- <a href="/#programmes">Our programmes</a><details className="app-nav-dropdown"><summary>Learn & participate <ChevronDown size={13} /></summary><div className="app-dropdown-panel"><Link to="/live-tests">Live tests & certificates</Link><Link to="/course">Courses & classes</Link><Link to="/mycourse">My enrolled courses</Link><a href="/#learning">Practice awareness quiz</a><Link to="/volunteer">Become a volunteer</Link><Link to="/gallery">Community gallery</Link><Link to="/login">Member sign in</Link></div></details><Link to="/app-features">The app</Link><Link className="ngo-button small" to="/partnership">Partner with us <ArrowUpRight size={16} /></Link></div></nav></header>;
+ <a href="/#programmes">Our programmes</a><details className="app-nav-dropdown"><summary>Learn & participate <ChevronDown size={13} /></summary><div className="app-dropdown-panel"><Link to="/live-tests">Live tests & certificates</Link><Link to="/course">Courses & classes</Link><Link to="/mycourse">My enrolled courses</Link><a href="/#learning">Practice awareness quiz</a><Link to="/volunteer">Become a volunteer</Link><Link to="/gallery">Community gallery</Link>{!isAuthenticated && <Link to="/login">Member sign in</Link>}</div></details><Link to="/app-features">The app</Link>{isAuthenticated ? <div className="ngo-auth-actions"><span className="ngo-auth-user" title={user.email || user.phone || user.name}><UserRound size={15} /><span>{user.name || 'Member'}</span></span><button className="ngo-logout-button" type="button" onClick={handleLogout} disabled={isLoggingOut}><LogOut size={15} /> {isLoggingOut ? 'Logging out…' : 'Logout'}</button></div> : <Link className="ngo-login-button" to="/login"><LogIn size={15} /> Login</Link>}<Link className="ngo-button small" to="/partnership">Partner with us <ArrowUpRight size={16} /></Link></div></nav></header>;
 }

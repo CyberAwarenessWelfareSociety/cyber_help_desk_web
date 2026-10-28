@@ -2,7 +2,10 @@
 // It navigates to /video/:classId (your admin/video CRUD screen) OR you can open direct video url list
 // Here we add: <Link to={`/video/${cls.id}`}> and pass cls.id (classId)
 
-import { useGetClassesByCourseQuery } from "@/store/api/class";
+import {
+  useDeleteClassMutation,
+  useGetClassesByCourseQuery,
+} from "@/store/api/class";
 import { useGetCourseByIdQuery } from "@/store/api/course";
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
@@ -14,6 +17,10 @@ import {
   Award,
   Globe,
   Check,
+  Pencil,
+  Trash2,
+  Settings,
+  BarChart3,
 } from "lucide-react";
 import Header from "@/components/Home/Header";
 import { FileText, MessageCircle, PlayCircle, Video } from "lucide-react"; // ✅ add Video icon
@@ -22,7 +29,11 @@ import {
   useCheckEnrollmentQuery,
   useCreateEnrollmentMutation,
 } from "@/store/api/enrollments";
-import { selectCurrentUser } from "@/store/reducer/auth";
+import {
+  isAdminUser,
+  isTeacherUser,
+  selectCurrentUser,
+} from "@/store/reducer/auth";
 import { useSelector } from "react-redux";
 import { useOrderMutation } from "@/store/api/auth";
 
@@ -32,6 +43,7 @@ const Classes = () => {
 
   const [createrazorpayinstace] = useOrderMutation();
   const [openClassId, setOpenClassId] = useState(null);
+  const [deletingClassId, setDeletingClassId] = useState(null);
 
   const user = useSelector(selectCurrentUser);
   const [createEnrollment] = useCreateEnrollmentMutation();
@@ -40,6 +52,7 @@ const Classes = () => {
     data: classData,
     isLoading,
     isError,
+    refetch: refetchClasses,
   } = useGetClassesByCourseQuery(id, { skip: !id });
 
   const { data: courseData } = useGetCourseByIdQuery(id, { skip: !id });
@@ -52,11 +65,32 @@ const Classes = () => {
   const isEnrolled = enrollmentData?.enrolled === true;
   const course = courseData?.data;
   const classes = classData?.data || [];
+  const isAdmin = isAdminUser(user);
+  const canManageCourse = isTeacherUser(user);
+  const hasLearningAccess = isEnrolled || canManageCourse;
 
   const client_id = user?.id || null;
+  const [deleteClass] = useDeleteClassMutation();
 
   const toggleAccordion = (classId) => {
     setOpenClassId(openClassId === classId ? null : classId);
+  };
+
+  const handleDeleteClass = async (classItem) => {
+    const confirmed = window.confirm(
+      `Delete “${classItem.title}”? Its related learning content may also be affected.`,
+    );
+    if (!confirmed) return;
+
+    try {
+      setDeletingClassId(classItem.id);
+      await deleteClass(classItem.id).unwrap();
+      await refetchClasses();
+    } catch (error) {
+      alert(error?.data?.message || "Failed to delete class");
+    } finally {
+      setDeletingClassId(null);
+    }
   };
 
   const handleEnroll = async () => {
@@ -160,7 +194,7 @@ const Classes = () => {
   };
 
   const handleJoinLiveClick = (classId, isLiveActive) => {
-    if (!isEnrolled) {
+    if (!hasLearningAccess) {
       alert("Please enroll to join the live class");
       return;
     }
@@ -227,11 +261,29 @@ const Classes = () => {
 
         <div
           className={`max-w-7xl mx-auto grid gap-12 px-6 py-12 -mt-20 relative z-10 ${
-            isEnrolled ? "lg:grid-cols-1" : "lg:grid-cols-3"
+            hasLearningAccess ? "lg:grid-cols-1" : "lg:grid-cols-3"
           }`}
         >
           {/* Left */}
-          <div className={isEnrolled ? "lg:col-span-3" : "lg:col-span-2"}>
+          <div className={hasLearningAccess ? "lg:col-span-3" : "lg:col-span-2"}>
+            {canManageCourse && (
+              <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="font-bold text-emerald-900">
+                    {isAdmin ? "Administrator course controls" : "Teacher course controls"}
+                  </p>
+                  <p className="text-sm text-emerald-800 mt-1">
+                    Create, update or remove classes and manage every class resource.
+                  </p>
+                </div>
+                <Link
+                  to={`/admin-classes/${id}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-5 py-3 text-white font-semibold hover:bg-emerald-800"
+                >
+                  <Settings size={18} /> Add or manage classes
+                </Link>
+              </div>
+            )}
             <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="p-8 border-b border-gray-100">
                 <h2 className="text-3xl font-bold text-gray-900">
@@ -258,12 +310,12 @@ const Classes = () => {
                     <div key={cls.id} className="transition-all duration-300">
                       <button
                         onClick={() =>
-                          isEnrolled && !isLiveClass && toggleAccordion(cls.id)
+                          hasLearningAccess && !isLiveClass && toggleAccordion(cls.id)
                         }
-                        disabled={!isEnrolled && !isLiveClass}
+                        disabled={!hasLearningAccess && !isLiveClass}
                         className={`w-full px-8 py-6 flex items-center justify-between text-left transition
                           ${
-                            !isEnrolled && !isLiveClass
+                            !hasLearningAccess && !isLiveClass
                               ? "cursor-not-allowed opacity-70"
                               : "hover:bg-gray-50"
                           }
@@ -304,10 +356,10 @@ const Classes = () => {
                                   e.stopPropagation();
                                   handleJoinLiveClick(cls.id, isLiveActive);
                                 }}
-                                disabled={!isEnrolled || !isLiveActive}
+                                disabled={!hasLearningAccess || !isLiveActive}
                                 className={`flex items-center gap-3 px-6 py-3 font-semibold rounded-xl shadow transition-all duration-300
     ${
-      isEnrolled && isLiveActive
+      hasLearningAccess && isLiveActive
         ? "bg-red-600 hover:bg-red-700 text-white scale-100"
         : "bg-red-200 text-red-400 opacity-60 cursor-not-allowed scale-95"
     }
@@ -326,7 +378,7 @@ const Classes = () => {
                                   : "-"}
                               </p>
 
-                              {!isEnrolled && (
+                              {!hasLearningAccess && (
                                 <p className="text-sm text-red-600 mt-1 font-medium">
                                   Enroll to access live classes
                                 </p>
@@ -345,12 +397,41 @@ const Classes = () => {
                         )}
                       </button>
 
+                      {canManageCourse && (
+                        <div className="px-6 pb-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                          <Link className="class-admin-action" to={`/admin-classes/${id}`}>
+                            <Pencil size={15} /> Edit class
+                          </Link>
+                          <Link className="class-admin-action" to={`/admin-video/${cls.id}`}>
+                            <Video size={15} /> Videos
+                          </Link>
+                          <Link className="class-admin-action" to={`/admin-materials/${cls.id}`}>
+                            <FileText size={15} /> Materials
+                          </Link>
+                          <Link className="class-admin-action" to={`/admin-question/${cls.id}`}>
+                            <MessageCircle size={15} /> Questions
+                          </Link>
+                          <Link className="class-admin-action" to={`/admin-results/${cls.id}`}>
+                            <BarChart3 size={15} /> Results
+                          </Link>
+                          <button
+                            type="button"
+                            className="class-admin-action is-delete"
+                            onClick={() => handleDeleteClass(cls)}
+                            disabled={deletingClassId === cls.id}
+                          >
+                            <Trash2 size={15} />
+                            {deletingClassId === cls.id ? "Deleting…" : "Delete"}
+                          </button>
+                        </div>
+                      )}
+
                       {/* ✅ Accordion Content */}
                       {!isLiveClass && openClassId === cls.id && (
                         <div className="px-8 pb-8">
                           <div className="grid sm:grid-cols-2 gap-4 mt-4">
                             {/* ✅ NEW: Videos button */}
-                            {isEnrolled ? (
+                            {hasLearningAccess ? (
                               <Link to={`/video/${cls.id}`}>
                                 <button className="w-full flex items-center gap-3 p-4 rounded-xl border hover:border-emerald-500 hover:bg-emerald-50 transition">
                                   <Video className="text-emerald-600" />
@@ -381,7 +462,7 @@ const Classes = () => {
                             )}
 
                             {/* Materials */}
-                            {isEnrolled ? (
+                            {hasLearningAccess ? (
                               <Link to={`/materials/${cls.id}`}>
                                 <button className="w-full flex items-center gap-3 p-4 rounded-xl border hover:border-blue-500 hover:bg-blue-50 transition">
                                   <FileText className="text-blue-600" />
@@ -451,7 +532,7 @@ const Classes = () => {
           </div>
 
           {/* Right: Enrollment Card */}
-          {!isEnrolled && (
+          {!hasLearningAccess && (
             <div className="lg:sticky lg:top-24 h-fit">
               <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
                 <div className="relative -mt-20 mb-8">

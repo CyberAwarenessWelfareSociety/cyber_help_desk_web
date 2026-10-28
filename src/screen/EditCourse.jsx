@@ -6,8 +6,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Save, Trash2, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
+import { isAdminUser } from "@/store/reducer/auth";
 
 import {
+  useGetCourseByIdQuery,
   useShowCourseOnlyInstructorQuery,
   useUpdateCourseMutation,
 } from "@/store/api/course";
@@ -20,15 +22,33 @@ const toNumber = (v, fallback = 0) => {
 const EditCourse = () => {
   const { id } = useParams(); // course id
   const navigate = useNavigate();
-  const userId = useSelector((state) => state.auth.user?.id);
+  const user = useSelector((state) => state.auth.user);
+  const userId = user?.id;
+  const isAdmin = isAdminUser(user);
 
   const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useShowCourseOnlyInstructorQuery({ userId, id }, { skip: !userId || !id });
+    data: instructorResponse,
+    isLoading: isInstructorLoading,
+    isError: isInstructorError,
+    error: instructorError,
+    refetch: refetchInstructor,
+  } = useShowCourseOnlyInstructorQuery(
+    { userId, id },
+    { skip: !userId || !id || isAdmin },
+  );
+  const {
+    data: adminResponse,
+    isLoading: isAdminLoading,
+    isError: isAdminError,
+    error: adminError,
+    refetch: refetchAdmin,
+  } = useGetCourseByIdQuery(id, { skip: !id || !isAdmin });
+
+  const response = isAdmin ? adminResponse : instructorResponse;
+  const isLoading = isAdmin ? isAdminLoading : isInstructorLoading;
+  const isError = isAdmin ? isAdminError : isInstructorError;
+  const error = isAdmin ? adminError : instructorError;
+  const refetch = isAdmin ? refetchAdmin : refetchInstructor;
 
   // ✅ API returns: { success, message, total, data: [ {...course} ] }
   const course = useMemo(() => {
