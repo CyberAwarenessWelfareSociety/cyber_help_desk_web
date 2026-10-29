@@ -62,6 +62,33 @@
   font-weight:500;
   margin-top:5px
 }
+.ngo-header .ngo-brand-copy {
+  display:block;
+  line-height:1.15
+}
+.ngo-header .ngo-brand-copy strong {
+  display:block;
+  font-size:19px;
+  font-weight:750;
+  letter-spacing:-.02em
+}
+.ngo-header .ngo-brand-copy>span {
+  display:block;
+  margin-top:3px;
+  color:#637848;
+  font-size:9px;
+  font-weight:750;
+  letter-spacing:.2em
+}
+.ngo-header .ngo-brand-copy small {
+  display:block;
+  margin-top:5px;
+  color:#6f7c73;
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.02em;
+  white-space:nowrap
+}
 .ngo-links {
   display:flex;
   align-items:center;
@@ -791,6 +818,12 @@
 .ngo-brand {
   font-size:16px
 }
+.ngo-header .ngo-brand-copy strong {
+  font-size:16px
+}
+.ngo-header .ngo-brand-copy small {
+  white-space:normal
+}
 .ngo-nav,.ngo-container {
   width:calc(100% - 48px)
 }
@@ -833,6 +866,17 @@
 }
 .ngo-brand span span {
   font-size:11px
+}
+.ngo-header .ngo-brand img {
+  width:46px;
+  height:46px
+}
+.ngo-header .ngo-brand-copy>span {
+  font-size:8px
+}
+.ngo-header .ngo-brand-copy small {
+  max-width:190px;
+  font-size:7px
 }
 .ngo-links,.ngo-login-button,.ngo-logout-button {
   font-size:14px

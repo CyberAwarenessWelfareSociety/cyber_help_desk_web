@@ -9,7 +9,7 @@ import {
   useUpdateVideoMutation,
   useDeleteVideoMutation,
 } from "@/store/api/video";
-import axios from "axios";
+import { uploadBucketFile } from "@/utils/uploadBucketFile";
 import { toast } from "sonner";
 import {
   Plus,
@@ -121,33 +121,24 @@ const AdminVideo = () => {
       return null;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
       setUploadingVideo(true);
-
-      const res = await axios.post(
-        "https://bucket.cyberawareness.ngo/bucket/upload/cybercrime",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      const url = await uploadBucketFile(
+        file,
+        "The course video could not be uploaded.",
       );
-
-    const url =
-      res?.data?.file?.url ||                 // ✅ your current API
-      res?.data?.file?.[0]?.url ||            // fallback if API ever returns array
-      res?.data?.url;   
-      if (!url) {
-        toast.error("Upload failed — no URL returned");
-        return null;
-      }
 
       setForm((prev) => ({ ...prev, video_url: url }));
       toast.success("Video uploaded");
       return url;
     } catch (err) {
       console.error(err);
-      toast.error(err?.response?.data?.message || "Video upload failed");
+      toast.error(
+        err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          err?.message ||
+          "Video upload failed",
+      );
       return null;
     } finally {
       setUploadingVideo(false);
@@ -171,33 +162,24 @@ const AdminVideo = () => {
       return null;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
       setUploadingThumb(true);
-
-      const res = await axios.post(
-        "https://bucket.cyberawareness.ngo/bucket/upload/cybercrime",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      const url = await uploadBucketFile(
+        file,
+        "The video thumbnail could not be uploaded.",
       );
-
-    const url =
-      res?.data?.file?.url ||                 // ✅ your current API
-      res?.data?.file?.[0]?.url ||            // fallback if API ever returns array
-      res?.data?.url;   
-      if (!url) {
-        toast.error("Upload failed — no URL returned");
-        return null;
-      }
 
       setForm((prev) => ({ ...prev, thumbnail: url }));
       toast.success("Thumbnail uploaded");
       return url;
     } catch (err) {
       console.error(err);
-      toast.error(err?.response?.data?.message || "Thumbnail upload failed");
+      toast.error(
+        err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          err?.message ||
+          "Thumbnail upload failed",
+      );
       return null;
     } finally {
       setUploadingThumb(false);
